@@ -75,6 +75,18 @@
           const [showHenryMessage, setShowHenryMessage] = useState(false);
           const [showMalleshMessage, setShowMalleshMessage] = useState(false);
           const [isMessageShowing, setIsMessageShowing] = useState(false);
+          const [isMobile, setIsMobile] = useState(false);
+
+          useEffect(() => {
+            const checkMobile = () => {
+              setIsMobile(window.innerWidth < 1024);
+            };
+            
+            checkMobile();
+            window.addEventListener('resize', checkMobile);
+            
+            return () => window.removeEventListener('resize', checkMobile);
+          }, []);
 
           useEffect(() => {
             if (level === 1) {
@@ -439,6 +451,25 @@
                   >
                     Play Again
                   </button>
+                </div>
+              </div>
+            );
+          }
+
+          if (isMobile) {
+            return (
+              <div className="w-full h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center p-8">
+                <div className="bg-white rounded-2xl p-8 shadow-2xl text-center max-w-md">
+                  <div className="text-6xl mb-4">💻</div>
+                  <h2 className="text-3xl font-bold text-gray-800 mb-4">
+                    Desktop Only
+                  </h2>
+                  <p className="text-gray-600 mb-4">
+                    Alignment Quest is optimized for desktop browsers. Please visit this page on a desktop or laptop computer for the best experience.
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    Minimum recommended screen width: 1024px
+                  </p>
                 </div>
               </div>
             );
